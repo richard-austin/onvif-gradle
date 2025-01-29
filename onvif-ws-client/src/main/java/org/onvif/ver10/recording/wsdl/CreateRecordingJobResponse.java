@@ -1,0 +1,107 @@
+
+package org.onvif.ver10.recording.wsdl;
+
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
+import org.onvif.ver10.schema.RecordingJobConfiguration;
+
+
+/**
+ * <p>Java class for anonymous complex type</p>.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.</p>
+ * 
+ * <pre>{@code
+ * <complexType>
+ *   <complexContent>
+ *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       <sequence>
+ *         <element name="JobToken" type="{http://www.onvif.org/ver10/schema}RecordingJobReference"/>
+ *         <element name="JobConfiguration" type="{http://www.onvif.org/ver10/schema}RecordingJobConfiguration"/>
+ *       </sequence>
+ *     </restriction>
+ *   </complexContent>
+ * </complexType>
+ * }</pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+    "jobToken",
+    "jobConfiguration"
+})
+@XmlRootElement(name = "CreateRecordingJobResponse")
+public class CreateRecordingJobResponse {
+
+    /**
+     * The JobToken shall identify the created recording job.
+     * 
+     */
+    @XmlElement(name = "JobToken", required = true)
+    protected String jobToken;
+    /**
+     * The JobConfiguration structure shall be the configuration as it is used by the
+     *                   device. This may be different from the
+     *                   JobConfiguration passed to CreateRecordingJob.
+     * 
+     */
+    @XmlElement(name = "JobConfiguration", required = true)
+    protected RecordingJobConfiguration jobConfiguration;
+
+    /**
+     * The JobToken shall identify the created recording job.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getJobToken() {
+        return jobToken;
+    }
+
+    /**
+     * Sets the value of the jobToken property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     * @see #getJobToken()
+     */
+    public void setJobToken(String value) {
+        this.jobToken = value;
+    }
+
+    /**
+     * The JobConfiguration structure shall be the configuration as it is used by the
+     *                   device. This may be different from the
+     *                   JobConfiguration passed to CreateRecordingJob.
+     * 
+     * @return
+     *     possible object is
+     *     {@link RecordingJobConfiguration }
+     *     
+     */
+    public RecordingJobConfiguration getJobConfiguration() {
+        return jobConfiguration;
+    }
+
+    /**
+     * Sets the value of the jobConfiguration property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link RecordingJobConfiguration }
+     *     
+     * @see #getJobConfiguration()
+     */
+    public void setJobConfiguration(RecordingJobConfiguration value) {
+        this.jobConfiguration = value;
+    }
+
+}
