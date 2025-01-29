@@ -35,16 +35,14 @@ import jakarta.xml.bind.annotation.XmlType;
 public class GetServiceCapabilitiesResponse {
 
     /**
-     * The capabilities for the event service is returned in the
-     *                   Capabilities element.
+     * The capabilities for the event service is returned in the Capabilities element.
      * 
      */
     @XmlElement(name = "Capabilities", required = true)
     protected Capabilities capabilities;
 
     /**
-     * The capabilities for the event service is returned in the
-     *                   Capabilities element.
+     * The capabilities for the event service is returned in the Capabilities element.
      * 
      * @return
      *     possible object is

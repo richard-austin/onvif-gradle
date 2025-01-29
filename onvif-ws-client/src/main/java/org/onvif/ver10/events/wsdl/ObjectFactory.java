@@ -25,6 +25,7 @@ import jakarta.xml.bind.annotation.XmlRegistry;
 public class ObjectFactory {
 
     private static final QName _Capabilities_QNAME = new QName("http://www.onvif.org/ver10/events/wsdl", "Capabilities");
+    private static final QName _ChangedOnly_QNAME = new QName("http://www.onvif.org/ver10/events/wsdl", "ChangedOnly");
     private static final QName _CreatePullPointSubscriptionInitialTerminationTime_QNAME = new QName("http://www.onvif.org/ver10/events/wsdl", "InitialTerminationTime");
 
     /**
@@ -185,13 +186,73 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link org.onvif.ver10.events.wsdl.SubscriptionPolicy }
+     * Create an instance of {@link AddEventBroker }
      * 
      * @return
-     *     the new instance of {@link org.onvif.ver10.events.wsdl.SubscriptionPolicy }
+     *     the new instance of {@link AddEventBroker }
      */
-    public org.onvif.ver10.events.wsdl.SubscriptionPolicy createSubscriptionPolicy() {
-        return new org.onvif.ver10.events.wsdl.SubscriptionPolicy();
+    public AddEventBroker createAddEventBroker() {
+        return new AddEventBroker();
+    }
+
+    /**
+     * Create an instance of {@link EventBrokerConfig }
+     * 
+     * @return
+     *     the new instance of {@link EventBrokerConfig }
+     */
+    public EventBrokerConfig createEventBrokerConfig() {
+        return new EventBrokerConfig();
+    }
+
+    /**
+     * Create an instance of {@link AddEventBrokerResponse }
+     * 
+     * @return
+     *     the new instance of {@link AddEventBrokerResponse }
+     */
+    public AddEventBrokerResponse createAddEventBrokerResponse() {
+        return new AddEventBrokerResponse();
+    }
+
+    /**
+     * Create an instance of {@link DeleteEventBroker }
+     * 
+     * @return
+     *     the new instance of {@link DeleteEventBroker }
+     */
+    public DeleteEventBroker createDeleteEventBroker() {
+        return new DeleteEventBroker();
+    }
+
+    /**
+     * Create an instance of {@link DeleteEventBrokerResponse }
+     * 
+     * @return
+     *     the new instance of {@link DeleteEventBrokerResponse }
+     */
+    public DeleteEventBrokerResponse createDeleteEventBrokerResponse() {
+        return new DeleteEventBrokerResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetEventBrokers }
+     * 
+     * @return
+     *     the new instance of {@link GetEventBrokers }
+     */
+    public GetEventBrokers createGetEventBrokers() {
+        return new GetEventBrokers();
+    }
+
+    /**
+     * Create an instance of {@link GetEventBrokersResponse }
+     * 
+     * @return
+     *     the new instance of {@link GetEventBrokersResponse }
+     */
+    public GetEventBrokersResponse createGetEventBrokersResponse() {
+        return new GetEventBrokersResponse();
     }
 
     /**
@@ -205,6 +266,19 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.onvif.org/ver10/events/wsdl", name = "Capabilities")
     public JAXBElement<Capabilities> createCapabilities(Capabilities value) {
         return new JAXBElement<>(_Capabilities_QNAME, Capabilities.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link Object }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://www.onvif.org/ver10/events/wsdl", name = "ChangedOnly")
+    public JAXBElement<Object> createChangedOnly(Object value) {
+        return new JAXBElement<>(_ChangedOnly_QNAME, Object.class, null, value);
     }
 
     /**

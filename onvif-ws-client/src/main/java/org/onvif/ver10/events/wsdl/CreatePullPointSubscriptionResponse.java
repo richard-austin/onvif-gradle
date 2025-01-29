@@ -48,8 +48,7 @@ import org.w3c.dom.Element;
 public class CreatePullPointSubscriptionResponse {
 
     /**
-     * Endpoint reference of the subscription to be used for pulling the
-     *                   messages.
+     * Endpoint reference of the subscription to be used for pulling the messages.
      * 
      */
     @XmlElement(name = "SubscriptionReference", required = true)
@@ -62,8 +61,7 @@ public class CreatePullPointSubscriptionResponse {
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar currentTime;
     /**
-     * Date time when the PullPoint will be shut down without further
-     *                   pull requests.
+     * Date time when the PullPoint will be shut down without further pull requests.
      * 
      */
     @XmlElement(name = "TerminationTime", namespace = "http://docs.oasis-open.org/wsn/b-2", required = true, nillable = true)
@@ -73,8 +71,7 @@ public class CreatePullPointSubscriptionResponse {
     protected List<Object> any;
 
     /**
-     * Endpoint reference of the subscription to be used for pulling the
-     *                   messages.
+     * Endpoint reference of the subscription to be used for pulling the messages.
      * 
      * @return
      *     possible object is
@@ -124,8 +121,7 @@ public class CreatePullPointSubscriptionResponse {
     }
 
     /**
-     * Date time when the PullPoint will be shut down without further
-     *                   pull requests.
+     * Date time when the PullPoint will be shut down without further pull requests.
      * 
      * @return
      *     possible object is

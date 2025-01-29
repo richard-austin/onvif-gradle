@@ -49,8 +49,7 @@ public class PullMessages {
     @XmlElement(name = "Timeout", required = true)
     protected Duration timeout;
     /**
-     * Upper limit for the number of messages to return at once. A server
-     *                   implementation may decide to return less messages.
+     * Upper limit for the number of messages to return at once. A server implementation may decide to return less messages.
      * 
      */
     @XmlElement(name = "MessageLimit")
@@ -84,8 +83,7 @@ public class PullMessages {
     }
 
     /**
-     * Upper limit for the number of messages to return at once. A server
-     *                   implementation may decide to return less messages.
+     * Upper limit for the number of messages to return at once. A server implementation may decide to return less messages.
      * 
      */
     public int getMessageLimit() {

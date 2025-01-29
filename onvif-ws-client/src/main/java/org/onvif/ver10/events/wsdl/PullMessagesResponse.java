@@ -44,16 +44,14 @@ import org.oasis_open.docs.wsn.b_2.NotificationMessageHolderType;
 public class PullMessagesResponse {
 
     /**
-     * The date and time when the messages have been delivered by the web
-     *                     server to the tests.
+     * The date and time when the messages have been delivered by the web server to the client.
      * 
      */
     @XmlElement(name = "CurrentTime", required = true)
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar currentTime;
     /**
-     * Date time when the PullPoint will be shut down without further
-     *                   pull requests.
+     * Date time when the PullPoint will be shut down without further pull requests.
      * 
      */
     @XmlElement(name = "TerminationTime", required = true)
@@ -67,8 +65,7 @@ public class PullMessagesResponse {
     protected List<NotificationMessageHolderType> notificationMessage;
 
     /**
-     * The date and time when the messages have been delivered by the web
-     *                     server to the tests.
+     * The date and time when the messages have been delivered by the web server to the client.
      * 
      * @return
      *     possible object is
@@ -93,8 +90,7 @@ public class PullMessagesResponse {
     }
 
     /**
-     * Date time when the PullPoint will be shut down without further
-     *                   pull requests.
+     * Date time when the PullPoint will be shut down without further pull requests.
      * 
      * @return
      *     possible object is

@@ -73,15 +73,13 @@ public class GetEventPropertiesResponse {
     @XmlElement(name = "TopicSet", namespace = "http://docs.oasis-open.org/wsn/t-1", required = true)
     protected TopicSetType topicSet;
     /**
-     * Defines the XPath expression syntax supported for matching topic expressions.
-     *                   
+     * Defines the XPath expression syntax supported for matching topic expressions. 
      * <pre>
      * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;br xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema"/&gt;
      * </pre>
      * 
-     *                   The following TopicExpressionDialects are mandatory for an ONVIF compliant device
-     *                   :
-     *                   
+     *                                     The following TopicExpressionDialects are mandatory for an ONVIF compliant device :
+     *                                     
      * <pre>
      * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;ul xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema" type="disc"&gt;&lt;li&gt;http://docs.oasis-open.org/wsn/t-1/TopicExpression/Concrete&lt;/li&gt;&lt;li&gt;http://www.onvif.org/ver10/tev/topicExpression/ConcreteSet.&lt;/li&gt;&lt;/ul&gt;
      * </pre>
@@ -92,20 +90,17 @@ public class GetEventPropertiesResponse {
     protected List<String> topicExpressionDialect;
     /**
      * Defines the XPath function set supported for message content filtering.
-     *                   
      * <pre>
      * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;br xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema"/&gt;
      * </pre>
      * 
-     *                   The following MessageContentFilterDialects should be returned if a device supports
-     *                   the message content filtering:
-     *                   
+     *                                     The following MessageContentFilterDialects should be returned if a device supports the message content filtering:
+     *                                     
      * <pre>
      * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;ul xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema" type="disc"&gt;&lt;li&gt;http://www.onvif.org/ver10/tev/messageContentFilter/ItemFilter.&lt;/li&gt;&lt;/ul&gt;
      * </pre>
      * 
-     *                   A device that does not support any MessageContentFilterDialect returns a single
-     *                   empty url.
+     *                                     A device that does not support any MessageContentFilterDialect returns a single empty url.
      * 
      */
     @XmlElement(name = "MessageContentFilterDialect", required = true)
@@ -114,9 +109,7 @@ public class GetEventPropertiesResponse {
     /**
      * Optional ProducerPropertiesDialects. Refer to 
      * <pre>
-     * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;a xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema" href="http://docs.oasis-open.org/wsn/wsn-ws_base_notification-1.3-spec-os.htm"&gt;Web
-     *                   Services Base Notification 1.3 (WS-BaseNotification)
-     *                 &lt;/a&gt;
+     * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;a xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema" href="http://docs.oasis-open.org/wsn/wsn-ws_base_notification-1.3-spec-os.htm"&gt;Web Services Base Notification 1.3 (WS-BaseNotification)&lt;/a&gt;
      * </pre>
      *  for advanced filtering.
      * 
@@ -126,18 +119,14 @@ public class GetEventPropertiesResponse {
     protected List<String> producerPropertiesFilterDialect;
     /**
      * The Message Content Description Language allows referencing
-     *                   of vendor-specific types. In order to ease the integration of such types into a
-     *                   tests application,
-     *                   the GetEventPropertiesResponse shall list all URI locations to schema files whose
-     *                   types are
-     *                   used in the description of notifications, with MessageContentSchemaLocation
-     *                   elements.
-     *                   
+     *                                     of vendor-specific types. In order to ease the integration of such types into a client application,
+     *                                     the GetEventPropertiesResponse shall list all URI locations to schema files whose types are
+     *                                     used in the description of notifications, with MessageContentSchemaLocation elements.
      * <pre>
      * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;br xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema"/&gt;
      * </pre>
      * 
-     *                   This list shall at least contain the URI of the ONVIF schema file.
+     *                                     This list shall at least contain the URI of the ONVIF schema file.
      * 
      */
     @XmlElement(name = "MessageContentSchemaLocation", required = true)
@@ -222,15 +211,13 @@ public class GetEventPropertiesResponse {
     }
 
     /**
-     * Defines the XPath expression syntax supported for matching topic expressions.
-     *                   
+     * Defines the XPath expression syntax supported for matching topic expressions. 
      * <pre>
      * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;br xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema"/&gt;
      * </pre>
      * 
-     *                   The following TopicExpressionDialects are mandatory for an ONVIF compliant device
-     *                   :
-     *                   
+     *                                     The following TopicExpressionDialects are mandatory for an ONVIF compliant device :
+     *                                     
      * <pre>
      * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;ul xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema" type="disc"&gt;&lt;li&gt;http://docs.oasis-open.org/wsn/t-1/TopicExpression/Concrete&lt;/li&gt;&lt;li&gt;http://www.onvif.org/ver10/tev/topicExpression/ConcreteSet.&lt;/li&gt;&lt;/ul&gt;
      * </pre>
@@ -268,20 +255,17 @@ public class GetEventPropertiesResponse {
 
     /**
      * Defines the XPath function set supported for message content filtering.
-     *                   
      * <pre>
      * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;br xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema"/&gt;
      * </pre>
      * 
-     *                   The following MessageContentFilterDialects should be returned if a device supports
-     *                   the message content filtering:
-     *                   
+     *                                     The following MessageContentFilterDialects should be returned if a device supports the message content filtering:
+     *                                     
      * <pre>
      * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;ul xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema" type="disc"&gt;&lt;li&gt;http://www.onvif.org/ver10/tev/messageContentFilter/ItemFilter.&lt;/li&gt;&lt;/ul&gt;
      * </pre>
      * 
-     *                   A device that does not support any MessageContentFilterDialect returns a single
-     *                   empty url.
+     *                                     A device that does not support any MessageContentFilterDialect returns a single empty url.
      * 
      * Gets the value of the messageContentFilterDialect property.
      * 
@@ -317,9 +301,7 @@ public class GetEventPropertiesResponse {
     /**
      * Optional ProducerPropertiesDialects. Refer to 
      * <pre>
-     * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;a xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema" href="http://docs.oasis-open.org/wsn/wsn-ws_base_notification-1.3-spec-os.htm"&gt;Web
-     *                   Services Base Notification 1.3 (WS-BaseNotification)
-     *                 &lt;/a&gt;
+     * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;a xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema" href="http://docs.oasis-open.org/wsn/wsn-ws_base_notification-1.3-spec-os.htm"&gt;Web Services Base Notification 1.3 (WS-BaseNotification)&lt;/a&gt;
      * </pre>
      *  for advanced filtering.
      * 
@@ -356,18 +338,14 @@ public class GetEventPropertiesResponse {
 
     /**
      * The Message Content Description Language allows referencing
-     *                   of vendor-specific types. In order to ease the integration of such types into a
-     *                   tests application,
-     *                   the GetEventPropertiesResponse shall list all URI locations to schema files whose
-     *                   types are
-     *                   used in the description of notifications, with MessageContentSchemaLocation
-     *                   elements.
-     *                   
+     *                                     of vendor-specific types. In order to ease the integration of such types into a client application,
+     *                                     the GetEventPropertiesResponse shall list all URI locations to schema files whose types are
+     *                                     used in the description of notifications, with MessageContentSchemaLocation elements.
      * <pre>
      * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;br xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:xs="http://www.w3.org/2001/XMLSchema"/&gt;
      * </pre>
      * 
-     *                   This list shall at least contain the URI of the ONVIF schema file.
+     *                                     This list shall at least contain the URI of the ONVIF schema file.
      * 
      * Gets the value of the messageContentSchemaLocation property.
      * 

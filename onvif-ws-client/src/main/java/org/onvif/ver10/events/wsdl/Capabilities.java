@@ -28,11 +28,13 @@ import org.w3c.dom.Element;
  *         <any processContents='lax' maxOccurs="unbounded" minOccurs="0"/>
  *       </sequence>
  *       <attribute name="WSSubscriptionPolicySupport" type="{http://www.w3.org/2001/XMLSchema}boolean" />
- *       <attribute name="WSPullPointSupport" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *       <attribute name="WSPausableSubscriptionManagerInterfaceSupport" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *       <attribute name="MaxNotificationProducers" type="{http://www.w3.org/2001/XMLSchema}int" />
  *       <attribute name="MaxPullPoints" type="{http://www.w3.org/2001/XMLSchema}int" />
  *       <attribute name="PersistentNotificationStorage" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *       <attribute name="EventBrokerProtocols" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       <attribute name="MaxEventBrokers" type="{http://www.w3.org/2001/XMLSchema}int" />
+ *       <attribute name="MetadataOverMQTT" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *       <anyAttribute processContents='lax'/>
  *     </restriction>
  *   </complexContent>
@@ -56,21 +58,13 @@ public class Capabilities {
     @XmlAttribute(name = "WSSubscriptionPolicySupport")
     protected Boolean wsSubscriptionPolicySupport;
     /**
-     * Indicates that the WS Pull Point is supported.
-     * 
-     */
-    @XmlAttribute(name = "WSPullPointSupport")
-    protected Boolean wsPullPointSupport;
-    /**
-     * Indicates that the WS Pausable Subscription Manager Interface is
-     *               supported.
+     * Indicates that the WS Pausable Subscription Manager Interface is supported.
      * 
      */
     @XmlAttribute(name = "WSPausableSubscriptionManagerInterfaceSupport")
     protected Boolean wsPausableSubscriptionManagerInterfaceSupport;
     /**
-     * Maximum number of supported notification producers as defined by
-     *               WS-BaseNotification.
+     * Maximum number of supported notification producers as defined by WS-BaseNotification.
      * 
      */
     @XmlAttribute(name = "MaxNotificationProducers")
@@ -87,6 +81,24 @@ public class Capabilities {
      */
     @XmlAttribute(name = "PersistentNotificationStorage")
     protected Boolean persistentNotificationStorage;
+    /**
+     * A space separated list of supported event broker protocols as defined by the tev:EventBrokerProtocol datatype.
+     * 
+     */
+    @XmlAttribute(name = "EventBrokerProtocols")
+    protected String eventBrokerProtocols;
+    /**
+     * Maxiumum number of event broker configurations that can be added to the device.
+     * 
+     */
+    @XmlAttribute(name = "MaxEventBrokers")
+    protected Integer maxEventBrokers;
+    /**
+     * Indicates that metadata streaming over MQTT is supported
+     * 
+     */
+    @XmlAttribute(name = "MetadataOverMQTT")
+    protected Boolean metadataOverMQTT;
     @XmlAnyAttribute
     private Map<QName, String> otherAttributes = new HashMap<>();
 
@@ -149,33 +161,7 @@ public class Capabilities {
     }
 
     /**
-     * Indicates that the WS Pull Point is supported.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isWSPullPointSupport() {
-        return wsPullPointSupport;
-    }
-
-    /**
-     * Sets the value of the wsPullPointSupport property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     * @see #isWSPullPointSupport()
-     */
-    public void setWSPullPointSupport(Boolean value) {
-        this.wsPullPointSupport = value;
-    }
-
-    /**
-     * Indicates that the WS Pausable Subscription Manager Interface is
-     *               supported.
+     * Indicates that the WS Pausable Subscription Manager Interface is supported.
      * 
      * @return
      *     possible object is
@@ -200,8 +186,7 @@ public class Capabilities {
     }
 
     /**
-     * Maximum number of supported notification producers as defined by
-     *               WS-BaseNotification.
+     * Maximum number of supported notification producers as defined by WS-BaseNotification.
      * 
      * @return
      *     possible object is
@@ -273,6 +258,81 @@ public class Capabilities {
      */
     public void setPersistentNotificationStorage(Boolean value) {
         this.persistentNotificationStorage = value;
+    }
+
+    /**
+     * A space separated list of supported event broker protocols as defined by the tev:EventBrokerProtocol datatype.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEventBrokerProtocols() {
+        return eventBrokerProtocols;
+    }
+
+    /**
+     * Sets the value of the eventBrokerProtocols property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     * @see #getEventBrokerProtocols()
+     */
+    public void setEventBrokerProtocols(String value) {
+        this.eventBrokerProtocols = value;
+    }
+
+    /**
+     * Maxiumum number of event broker configurations that can be added to the device.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getMaxEventBrokers() {
+        return maxEventBrokers;
+    }
+
+    /**
+     * Sets the value of the maxEventBrokers property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     * @see #getMaxEventBrokers()
+     */
+    public void setMaxEventBrokers(Integer value) {
+        this.maxEventBrokers = value;
+    }
+
+    /**
+     * Indicates that metadata streaming over MQTT is supported
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMetadataOverMQTT() {
+        return metadataOverMQTT;
+    }
+
+    /**
+     * Sets the value of the metadataOverMQTT property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     * @see #isMetadataOverMQTT()
+     */
+    public void setMetadataOverMQTT(Boolean value) {
+        this.metadataOverMQTT = value;
     }
 
     /**

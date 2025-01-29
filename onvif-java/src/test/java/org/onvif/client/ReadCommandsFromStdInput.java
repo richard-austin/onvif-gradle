@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public class ReadCommandsFromStdInput {
@@ -42,9 +43,11 @@ public class ReadCommandsFromStdInput {
     } catch (MalformedURLException | ConnectException | SOAPException e1) {
       System.err.println("No connection to camera, please try again.");
       return;
+    } catch (URISyntaxException e) {
+        throw new RuntimeException(e);
     }
 
-    System.out.println("Connection to camera successful!");
+      System.out.println("Connection to camera successful!");
 
     while (true) {
       try {
