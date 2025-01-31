@@ -90,8 +90,9 @@ public class PullPointTest implements PullMessagesCallbacks {
 
         try {
             PullPointSubscriptionHandler ppsh = new PullPointSubscriptionHandler(cam, pullPointSubscription, this);
-            Thread.currentThread().join();
-            ppsh.setTerminate();
+            ppsh.subcribe();
+//            Thread.currentThread().join();
+//            ppsh.setTerminate();
 
 
          } catch (Exception e) {

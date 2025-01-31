@@ -4,6 +4,7 @@ import jakarta.xml.soap.SOAPElement;
 import jakarta.xml.soap.SOAPException;
 import jakarta.xml.soap.SOAPFactory;
 import jakarta.xml.ws.BindingProvider;
+import jakarta.xml.ws.WebServiceException;
 import jakarta.xml.ws.wsaddressing.W3CEndpointReference;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.frontend.ClientProxy;
@@ -46,6 +47,7 @@ public class PullPointSubscriptionHandler {
     PullMessagesCallbacks callback;
     SOAPElement messageIDEl;
     boolean terminate = false;
+    private final int MAX_RETRIES = 3;
 
     public PullPointSubscriptionHandler(final OnvifDevice device, CreatePullPointSubscription cpps, PullMessagesCallbacks callback) {
         eventWs = device.getEvents();
@@ -54,11 +56,22 @@ public class PullPointSubscriptionHandler {
         headers = new ArrayList<>();
         pullMessagesExecutor = Executors.newSingleThreadExecutor();
         this.callback = callback;
-        init();
     }
 
-    private void init() {
+    boolean initialPullMessagesDone = false;
+    int errorCountdown = MAX_RETRIES;
+
+    public void subcribe() {
+        init(false);
+    }
+
+    public void getSupportedEvents() {
+        init(true);
+    }
+
+    private void init(boolean getSupportedEvents) {
         final String addressingNS = "http://www.w3.org/2005/08/addressing";
+        initialPullMessagesDone = false;
         try {
             CreatePullPointSubscriptionResponse resp =
                     eventWs.createPullPointSubscription(cpps);
@@ -112,29 +125,44 @@ public class PullPointSubscriptionHandler {
             pullPointSubscriptionProxy.getRequestContext().put(Header.HEADER_LIST, headers);
             subscriptionManagerProxy.getRequestContext().put(Header.HEADER_LIST, headers);
 
-            startPullMessages();
+            startPullMessages(getSupportedEvents);
+
+            // Block until finished if getSupportedEvents is set
+            if(getSupportedEvents) {
+                synchronized (this) {
+                    this.wait(100000);
+                }
+            }
+            errorCountdown = MAX_RETRIES;  // Reset on no errors
+
         } catch (DatatypeConfigurationException | SOAPException | UnsupportedPolicyRequestFault |
                  TopicExpressionDialectUnknownFault | TopicNotSupportedFault | ResourceUnknownFault |
                  UnrecognizedPolicyRequestFault | NotifyMessageNotSupportedFault | SubscribeCreationFailedFault |
                  UnacceptableInitialTerminationTimeFault | InvalidProducerPropertiesExpressionFault |
-                 InvalidTopicExpressionFault | InvalidMessageContentExpressionFault | InvalidFilterFault e) {
+                 InvalidTopicExpressionFault | InvalidMessageContentExpressionFault |
+                 InvalidFilterFault | WebServiceException e) {
             LOG.error("{}: {}", e.getClass().getName(), e.getMessage());
             try {
-                if(!terminate) {
+                // If on get supported events only, then terminate after MAX_RETRIES errors
+                // If on continuous event subscription, always restart after error
+                // Always terminate if terminate == true
+                if(!terminate && (!getSupportedEvents || --errorCountdown > 0)) {
                     Thread.sleep(3000);
-                    init(); // On failure, tru again after delay
+                    init(getSupportedEvents); // On failure, tru again after delay
                 }
             }
             catch (InterruptedException ignored) {}
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    boolean initialPullMessagesDone = false;
-    void startPullMessages() {
+    int numberOfEvents = -1;
+    void startPullMessages(final boolean getSupportedEvents) {
         // This picks up the initial states of the topics and stops once all those initial states have been gathered
         this.pullMessagesExecutor.execute(() -> {
+            boolean restart = false;
             try {
-
                 if(initialPullMessagesDone) {
                     // Update the message ID for the renew call
                     messageIDEl.setTextContent("urn:uuid:" + UUID.randomUUID());
@@ -146,9 +174,22 @@ public class PullPointSubscriptionHandler {
                 PullMessagesResponse response = pullMessages(pm);
                 initialPullMessagesDone = true;
                 var nm = response.getNotificationMessage();
-
                 if (nm != null && !nm.isEmpty())
                     callback.onPullMessagesReceived(response);
+
+                if(nm != null) {
+                    if (getSupportedEvents && nm.size() < numberOfEvents) {
+                        // Number of events received is less than previous, which means it's the last lot
+                        terminate = true;
+                        synchronized (this) {
+                            this.notify();
+                        }
+                    }
+                    else
+                        numberOfEvents = nm.size();
+                }
+                else
+                    terminate = true;
 
                 if(terminate) {
                     unsubscribe(new Unsubscribe());
@@ -165,11 +206,15 @@ public class PullPointSubscriptionHandler {
                         Thread.sleep(3000);
                     } catch (InterruptedException ignored) {}
                     // On error restart from the beginning
-                    init();
+                    restart=true;
                 }
             } finally {
-                if(!terminate)
-                    startPullMessages();
+                if(!terminate) {
+                    if(restart)
+                        init(getSupportedEvents);
+                    else
+                        startPullMessages(getSupportedEvents);
+                }
             }
         });
     }
