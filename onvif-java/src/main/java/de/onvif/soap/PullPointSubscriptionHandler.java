@@ -86,7 +86,7 @@ public class PullPointSubscriptionHandler {
 
             pm = new PullMessages();
             pm.setMessageLimit(1024);
-            Duration dur = DatatypeFactory.newInstance().newDuration("PT1M");
+            Duration dur = DatatypeFactory.newInstance().newDuration(getSupportedEvents ? "PT1S" : "PT1M");
             pm.setTimeout(dur);
             renew = new Renew();
             renew.setTerminationTime(dur.toString());
@@ -157,7 +157,6 @@ public class PullPointSubscriptionHandler {
         }
     }
 
-    int numberOfEvents = -1;
     void startPullMessages(final boolean getSupportedEvents) {
         // This picks up the initial states of the topics and stops once all those initial states have been gathered
         this.pullMessagesExecutor.execute(() -> {
@@ -172,21 +171,22 @@ public class PullPointSubscriptionHandler {
                 // Update the message ID for the pullMessages call
                 messageIDEl.setTextContent("urn:uuid:" + UUID.randomUUID());
                 PullMessagesResponse response = pullMessages(pm);
-                initialPullMessagesDone = true;
+
                 var nm = response.getNotificationMessage();
                 if (nm != null && !nm.isEmpty())
                     callback.onPullMessagesReceived(response);
 
                 if(nm != null) {
-                    if (getSupportedEvents && nm.size() < numberOfEvents) {
-                        // Number of events received is less than previous, which means it's the last lot
-                        terminate = true;
-                        synchronized (this) {
-                            this.notify();
+                    if(nm.isEmpty()) {
+                        if (getSupportedEvents) {
+                            // Only getting the supported events and now we're done
+                            terminate = true;
+                            synchronized (this) {
+                                this.notify();
+                            }
                         }
+                        initialPullMessagesDone = true;
                     }
-                    else
-                        numberOfEvents = nm.size();
                 }
                 else
                     terminate = true;
