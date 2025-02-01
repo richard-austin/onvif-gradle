@@ -1,5 +1,6 @@
 package de.onvif.soap;
 
+import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.soap.SOAPElement;
 import jakarta.xml.soap.SOAPException;
 import jakarta.xml.soap.SOAPFactory;
@@ -10,16 +11,15 @@ import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.headers.Header;
 import org.apache.cxf.helpers.DOMUtils;
-import org.oasis_open.docs.wsn.b_2.Renew;
-import org.oasis_open.docs.wsn.b_2.RenewResponse;
-import org.oasis_open.docs.wsn.b_2.Unsubscribe;
-import org.oasis_open.docs.wsn.b_2.UnsubscribeResponse;
+import org.oasis_open.docs.wsn.b_2.*;
 import org.oasis_open.docs.wsn.bw_2.*;
 import org.oasis_open.docs.wsrf.rw_2.ResourceUnknownFault;
 import org.onvif.ver10.events.wsdl.*;
+import org.onvif.ver10.events.wsdl.ObjectFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -41,7 +41,7 @@ public class PullPointSubscriptionHandler {
     private final OnvifDevice device;
     private PullPointSubscription pullPointSubscription;
     private SubscriptionManager subscriptionManager;
-    private final CreatePullPointSubscription cpps;
+    private CreatePullPointSubscription cpps;
     PullMessages pm = null;
     Renew renew = null;
     PullMessagesCallbacks callback;
@@ -49,24 +49,71 @@ public class PullPointSubscriptionHandler {
     boolean terminate = false;
     private final int MAX_RETRIES = 3;
 
-    public PullPointSubscriptionHandler(final OnvifDevice device, CreatePullPointSubscription cpps, PullMessagesCallbacks callback) {
+    public PullPointSubscriptionHandler(final OnvifDevice device, PullMessagesCallbacks callback) {
         eventWs = device.getEvents();
         this.device = device;
-        this.cpps = cpps;
         headers = new ArrayList<>();
         pullMessagesExecutor = Executors.newSingleThreadExecutor();
         this.callback = callback;
     }
-
+    
     boolean initialPullMessagesDone = false;
     int errorCountdown = MAX_RETRIES;
 
+    /**
+     * subscribe: Subscribe to the topic specified in the createPullPointSubscription call and continue to receive
+     *           change notifications until setTerminate is called. This is a non-blocking call which sets up its own
+     *           thread.
+     */
     public void subcribe() {
         init(false);
     }
 
+    /**
+     * getSupportedEvents: Get the event paths covered by the topic specified in createPullPointSubscription and
+     *                     return when all have been sent. This call blocks until complete.
+     */
     public void getSupportedEvents() {
         init(true);
+    }
+
+    /**
+     * createPullPointSubscription: Create the pull point subscription for the given topic. This must be called before
+     *                              subscribe or getSupportedEvents.
+     * @param topic: The topic to subscribe to
+     */
+    public void createPullPointSubscription(final String topic) {
+        EventPortType eventWs = device.getEvents();
+        GetEventProperties getEventProperties = new GetEventProperties();
+        GetEventPropertiesResponse getEventPropertiesResp =
+                eventWs.getEventProperties(getEventProperties);
+        getEventPropertiesResp.getMessageContentFilterDialect().forEach(System.out::println);
+        getEventPropertiesResp.getTopicExpressionDialect().forEach(System.out::println);
+        for (Object object : getEventPropertiesResp.getTopicSet().getAny()) {
+            Element e = (Element) object;
+            printTree(e, e.getNodeName());
+        }
+
+        org.oasis_open.docs.wsn.b_2.ObjectFactory objectFactory =
+                new org.oasis_open.docs.wsn.b_2.ObjectFactory();
+        CreatePullPointSubscription pullPointSubscription = new CreatePullPointSubscription();
+        FilterType filter = new FilterType();
+        TopicExpressionType topicExp = new TopicExpressionType();
+        topicExp.getContent().add(topic); // every event in that
+        // topic
+        topicExp.setDialect("http://www.onvif.org/ver10/tev/topicExpression/ConcreteSet");
+        JAXBElement<?> topicExpElem = objectFactory.createTopicExpression(topicExp);
+        filter.getAny().add(topicExpElem);
+        pullPointSubscription.setFilter(filter);
+        ObjectFactory eventObjFactory =
+                new ObjectFactory();
+        CreatePullPointSubscription.SubscriptionPolicy subcriptionPolicy =
+                eventObjFactory.createCreatePullPointSubscriptionSubscriptionPolicy();
+        pullPointSubscription.setSubscriptionPolicy(subcriptionPolicy);
+        String timespan = "PT1M"; // every 1 minute
+        pullPointSubscription.setInitialTerminationTime(
+                objectFactory.createSubscribeInitialTerminationTime(timespan));
+        cpps = pullPointSubscription;
     }
 
     private void init(boolean getSupportedEvents) {
@@ -255,5 +302,15 @@ public class PullPointSubscriptionHandler {
             return DOMUtils.getContent(e).trim();
         }
         return null;
+    }
+
+    private static void printTree(Node node, String name) {
+        if (node.hasChildNodes()) {
+            NodeList nodes = node.getChildNodes();
+            for (int i = 0; i < nodes.getLength(); i++) {
+                Node n = nodes.item(i);
+                printTree(n, name + " - " + n.getNodeName());
+            }
+        } else System.out.println(name + " - " + node.getNodeName());
     }
 }
