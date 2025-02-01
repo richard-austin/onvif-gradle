@@ -52,11 +52,6 @@ public class PullPointTest implements PullMessagesCallbacks {
         }
         System.out.println("Connected to device " + cam.getDeviceInfo());
 
-        // get device capabilities
-        Capabilities cap = cam.getDevice().getCapabilities(List.of(CapabilityCategory.ALL));
-        System.out.println(cap.getDevice().toString());
-        // print profiles
-        printProfiles(cam);
         EventPortType eventWs = cam.getEvents();
         GetEventProperties getEventProperties = new GetEventProperties();
         GetEventPropertiesResponse getEventPropertiesResp =
@@ -73,12 +68,12 @@ public class PullPointTest implements PullMessagesCallbacks {
         CreatePullPointSubscription pullPointSubscription = new CreatePullPointSubscription();
         FilterType filter = new FilterType();
         TopicExpressionType topicExp = new TopicExpressionType();
-        topicExp.getContent().add("tns1:RuleEngine//."); // every event in that
+        topicExp.getContent().add("tns1://."); // every event in that
         // topic
         topicExp.setDialect("http://www.onvif.org/ver10/tev/topicExpression/ConcreteSet");
         JAXBElement<?> topicExpElem = objectFactory.createTopicExpression(topicExp);
         filter.getAny().add(topicExpElem);
-        //pullPointSubscription.setFilter(filter);
+        pullPointSubscription.setFilter(filter);
         ObjectFactory eventObjFactory =
                 new ObjectFactory();
         SubscriptionPolicy subcriptionPolicy =
@@ -91,10 +86,6 @@ public class PullPointTest implements PullMessagesCallbacks {
         try {
             PullPointSubscriptionHandler ppsh = new PullPointSubscriptionHandler(cam, pullPointSubscription, this);
             ppsh.subcribe();
-//            Thread.currentThread().join();
-//            ppsh.setTerminate();
-
-
          } catch (Exception e) {
             System.out.println(e.getClass().getName() + " " + e.getMessage());
         }
